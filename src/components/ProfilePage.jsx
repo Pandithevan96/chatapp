@@ -53,7 +53,7 @@ const ProfilePage = () => {
       });
 
       alert('Profile updated successfully!');
-      navigate('/chatapp/'); // Navigate to home page after successful update
+      navigate('#/chatapp'); // Navigate to home page after successful update
     } catch (error) {
       console.error('Error updating profile:', error);
       alert('There was an error updating your profile. Please try again.');

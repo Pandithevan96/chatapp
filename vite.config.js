@@ -1,19 +1,17 @@
-// vite.config.js
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
-import{ defineConfig } from 'vite'
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
-
-// https://vitejs.dev/config/
-export default {
+export default defineConfig({
+  base: '/chatapp/', // Set the base URL for GitHub Pages
   plugins: [react()],
-  css:{
-    postcss:{
-      plugins:[
+  css: {
+    postcss: {
+      plugins: [
         tailwindcss(),
         autoprefixer()
       ]
     }
   }
-}
+});

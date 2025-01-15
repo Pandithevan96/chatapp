@@ -311,9 +311,9 @@
                           </Avatar>
                           </StyledBadge>):
                           (<Avatar sx={{ bgcolor: getUserColor(user.email) }} src={user.profileImage || "/default-avatar.png"}
-                          onError={(e) => {
-                            e.target.src = "default-avatar.png";
-                          }}>
+                            onError={(e) => {
+    e.target.src = "default-avatar.png";
+  }}>
                             
                           </Avatar>)
                           }
@@ -369,9 +369,7 @@
                 </div>
                 {selectedUser && (
                   <Avatar
-                  src={clickedUser?.profileImage || "/default-avatar.png"
-                    
-                  }
+                  src={clickedUser?.profileImage || "/default-avatar.png"}
                     sx={{
                       bgcolor: getUserColor(selectedUser),
                     }}

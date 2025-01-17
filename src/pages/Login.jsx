@@ -32,7 +32,7 @@ const Login = () => {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) { 
-        navigate('#/chatapp');
+        navigate('/');
       } else {
         setError("User not found in the database.");
       }

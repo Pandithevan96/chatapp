@@ -53,7 +53,7 @@ const ProfilePage = () => {
       });
 
       alert('Profile updated successfully!');
-      navigate('#/chatapp'); // Navigate to home page after successful update
+      navigate('/'); // Navigate to home page after successful update
     } catch (error) {
       console.error('Error updating profile:', error);
       alert('There was an error updating your profile. Please try again.');
@@ -81,7 +81,7 @@ const ProfilePage = () => {
       <Button
         variant="contained"
         startIcon={<ArrowBack />}
-        onClick={() => navigate('/chatapp/')}
+        onClick={() => navigate('/')}
         className="my-4 bg-indigo-600 hover:bg-indigo-700 text-white"
       >
         Back to Home

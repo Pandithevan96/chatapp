@@ -303,17 +303,11 @@
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         variant="dot"
                       >
-                          <Avatar sx={{ bgcolor: getUserColor(user.email) }} src={user.profileImage || "/default-avatar.png"}
-                            onError={(e) => {
-                              e.target.src = "default-avatar.png";
-                            }}>
+                          <Avatar sx={{ bgcolor: getUserColor(user.email) }} src={user?.profileImage }>
                             
                           </Avatar>
                           </StyledBadge>):
-                          (<Avatar sx={{ bgcolor: getUserColor(user.email) }} src={user.profileImage || "/default-avatar.png"}
-                            onError={(e) => {
-    e.target.src = "default-avatar.png";
-  }}>
+                          (<Avatar sx={{ bgcolor: getUserColor(user.email) }} src={user?.profileImage }>
                             
                           </Avatar>)
                           }
@@ -369,7 +363,7 @@
                 </div>
                 {selectedUser && (
                   <Avatar
-                  src={clickedUser?.profileImage || "/default-avatar.png"}
+                  src={clickedUser?.profileImage }
                     sx={{
                       bgcolor: getUserColor(selectedUser),
                     }}
@@ -383,10 +377,7 @@
               </div>
 
               <div className="flex gap-2 items-center mx-2">
-                <Avatar sx={{ bgcolor: getUserColor(currentEmail) }} src={currentUser?.profileImage || "/default-avatar.png"}
-                  onError={(e) => {
-                    e.target.src = "default-avatar.png";
-                  }}>
+                <Avatar sx={{ bgcolor: getUserColor(currentEmail) }} src={currentUser?.profileImage }>
                 </Avatar>
               <MoreVert sx={{color:'white'}}     onClick={handleMenuClick}/>
 

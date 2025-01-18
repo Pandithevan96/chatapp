@@ -88,7 +88,7 @@
   const Home = () => {
     const navigate = useNavigate();
 
-    const { users, setUsers, selectedUser, setSelectedUser,currentEmail,setCurrentEmail,onlineEmail,setOnlineEmail } = useUserStore();
+    const { users, setUsers, selectedUser, setSelectedUser,currentEmail,setCurrentEmail } = useUserStore();
     const [message, setMessage] = useState("");
     const [chatMessages, setChatMessages] = useState([]);
     const [menuAnchor, setMenuAnchor] = useState(null);
@@ -225,20 +225,25 @@
     const handleLogout = async () => {
       try {
         if (currentEmail) {
-          const sanitizedEmail = currentEmail.replace(/\./g, "_");
-          const userRef = doc(db, "users", sanitizedEmail);
-          const userDoc = await getDoc(userRef);
-
-          if (userDoc.exists()) {
-            await updateDoc(userRef, { status: "offline" });
-          }
-          if(currentEmail === onlineEmail){
-
-            setOnlineEmail(null)
+          // Retrieve the user's UID (if not already stored)
+          const userUid = auth.currentUser?.uid; // Ensure currentUser is available
+    
+          if (userUid) {
+            // Reference the Firestore document using the UID
+            const userRef = doc(db, "users", userUid);
+    
+            // Update the status to "off"
+            await updateDoc(userRef, { status: "off" });
+            console.log("User status updated to 'off'.");
+          } else {
+            console.error("User UID not found.");
           }
         }
-
+    
+        // Sign out the user
         await signOut(auth);
+    
+        // Clear user information and redirect
         setCurrentEmail("");
         localStorage.removeItem("currentEmail");
         navigate("/login");
@@ -246,11 +251,14 @@
         console.error("Error logging out:", error.message);
       }
     };
+    
     const currentUser = users?.find((user) => user?.email.trim() === currentEmail?.trim());
     const clickedUser = users?.find((user) => user?.email.trim() === selectedUser?.trim());
 
     return (
+
       <div className="home overflow-y-auto lg:w-[800px] lg:mx-auto ">
+
         {/* Drawer for the first column */}
         <Drawer
           anchor="left"
@@ -297,7 +305,7 @@
                           onClick={() => handleUserClick(user.email)}
                         > 
                         
-                        {onlineEmail && onlineEmail.includes(user.email) ? (
+                        {users.status === "on"? (
                           <StyledBadge
                         overlap="circular"
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

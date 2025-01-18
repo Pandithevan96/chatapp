@@ -80,13 +80,13 @@ const Signup = () => {
       // Save user data to Firestore with a default profile image
       const defaultProfileImage = "https://via.placeholder.com/150"; // Empty or default image URL
       await setDoc(doc(db, "users", user.uid), {
-        uid:user.uid,
+        uid: user.uid,
         username: username,
         email: email,
-        profileImage: defaultProfileImage, // Include the default image field
+        profileImage: "https://via.placeholder.com/150", // Default image URL
         createdAt: new Date(),
+        status: "off", // Add the status field here
       });
-
       // Update Zustand store with new user data
       setUsers([...users, { username, email, profileImage: defaultProfileImage }]);
 
@@ -110,7 +110,7 @@ const Signup = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-lg shadow-lg max-w-4xl w-full">
         <div className="flex justify-center items-center">
           <img
-            src="../src/assets/signup.jpg"
+            src="./src/assets/signup.jpg"
             alt="Signup"
             className="lg:w-80 lg:h-80 h-52 w-52 object-cover rounded-lg"
           />

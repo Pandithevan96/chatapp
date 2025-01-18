@@ -5,7 +5,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { auth, db } from '../firebase'; // Import from your Firebase config
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where,doc,updateDoc } from "firebase/firestore";
 import useUserStore from "../store/store";
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,22 +24,29 @@ const Login = () => {
     e.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Firebase Login Successful:", userCredential);
       const user = userCredential.user;
-
-      // Verify user in Firestore
+  
       const q = query(collection(db, "users"), where("email", "==", user.email));
-      setOnlineEmail(user.email)
+  
       const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) { 
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        console.log("User Found:", userDoc.id, userDoc.data());
+        const userRef = doc(db, "users", userDoc.id);
+        await updateDoc(userRef, { status: "on" });
+        console.log("User status updated");
         navigate('/');
       } else {
+        console.error("User not found in Firestore.");
         setError("User not found in the database.");
       }
     } catch (error) {
+      console.error("Login Error:", error);
       setError("Invalid credentials. Please try again.");
     }
   };
+  
 
   return (
     <div className="login flex justify-center items-center min-h-screen bg-gray-100">

@@ -305,7 +305,7 @@
                           onClick={() => handleUserClick(user.email)}
                         > 
                         
-                        {users.status === "on"? (
+                        {user.status === "on"? (
                           <StyledBadge
                         overlap="circular"
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

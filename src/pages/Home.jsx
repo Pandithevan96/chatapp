@@ -81,7 +81,7 @@
   }));
   // Function to get a color based on the user (email)
   const getUserColor = (email) => {
-    const index = email.toLowerCase().charCodeAt(0) % colors.length; // Assign a color based on the first character of email
+    const index = email?.toLowerCase().charCodeAt(0) % colors.length; // Assign a color based on the first character of email
     return colors[index];
   };
 
@@ -369,7 +369,17 @@
                     View Users to Chat
                   </Button>
                 </div>
-                {selectedUser && (
+                {selectedUser && clickedUser.status === "on" ?
+                (<StyledBadge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                variant="dot"
+              >
+                  <Avatar sx={{ bgcolor: getUserColor(clickedUser.email) }} src={clickedUser?.profileImage }>
+                    
+                  </Avatar>
+                  </StyledBadge>):
+                (
                   <Avatar
                   src={clickedUser?.profileImage }
                     sx={{
